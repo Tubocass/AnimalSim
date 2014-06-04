@@ -166,7 +166,7 @@ public class TerrainToolkitEditor : Editor {
 						return;
 					}
 					TerrainData terData = ter.terrainData;
-					Undo.RegisterUndo(terData, "Terrain Generator");
+					Undo.RecordObject(terData, "Terrain Generator");
 					TerrainToolkit.GeneratorProgressDelegate generatorProgressDelegate = new TerrainToolkit.GeneratorProgressDelegate(updateGeneratorProgress);
 					terrain.generateTerrain(generatorProgressDelegate);
 					EditorUtility.ClearProgressBar();
@@ -228,7 +228,7 @@ public class TerrainToolkitEditor : Editor {
 						return;
 					}
 					TerrainData terData = ter.terrainData;
-					Undo.RegisterUndo(terData, "Terrain Generator");
+					Undo.RecordObject(terData, "Terrain Generator");
 					TerrainToolkit.GeneratorProgressDelegate generatorProgressDelegate = new TerrainToolkit.GeneratorProgressDelegate(updateGeneratorProgress);
 					terrain.generateTerrain(generatorProgressDelegate);
 					EditorUtility.ClearProgressBar();
@@ -298,7 +298,7 @@ public class TerrainToolkitEditor : Editor {
 						return;
 					}
 					TerrainData terData = ter.terrainData;
-					Undo.RegisterUndo(terData, "Terrain Generator");
+					Undo.RecordObject(terData, "Terrain Generator");
 					TerrainToolkit.GeneratorProgressDelegate generatorProgressDelegate = new TerrainToolkit.GeneratorProgressDelegate(updateGeneratorProgress);
 					terrain.generateTerrain(generatorProgressDelegate);
 					EditorUtility.ClearProgressBar();
@@ -331,7 +331,7 @@ public class TerrainToolkitEditor : Editor {
 						return;
 					}
 					TerrainData terData = ter.terrainData;
-					Undo.RegisterUndo(terData, "Smooth Terrain");
+					Undo.RecordObject(terData, "Smooth Terrain");
 					TerrainToolkit.GeneratorProgressDelegate generatorProgressDelegate = new TerrainToolkit.GeneratorProgressDelegate(updateGeneratorProgress);
 					terrain.generateTerrain(generatorProgressDelegate);
 					EditorUtility.ClearProgressBar();
@@ -368,7 +368,7 @@ public class TerrainToolkitEditor : Editor {
 						return;
 					}
 					TerrainData terData = ter.terrainData;
-					Undo.RegisterUndo(terData, "Normalise Terrain");
+					Undo.RecordObject(terData, "Normalise Terrain");
 					TerrainToolkit.GeneratorProgressDelegate generatorProgressDelegate = new TerrainToolkit.GeneratorProgressDelegate(updateGeneratorProgress);
 					terrain.generateTerrain(generatorProgressDelegate);
 					EditorUtility.ClearProgressBar();
@@ -461,7 +461,7 @@ public class TerrainToolkitEditor : Editor {
 						return;
 					}
 					TerrainData terData = ter.terrainData;
-					Undo.RegisterUndo(terData, "Terrain Erosion");
+					Undo.RecordObject(terData, "Terrain Erosion");
 					// Start time...
 					DateTime startTime = DateTime.Now;
 					TerrainToolkit.ErosionProgressDelegate erosionProgressDelegate = new TerrainToolkit.ErosionProgressDelegate(updateErosionProgress);
@@ -670,7 +670,7 @@ public class TerrainToolkitEditor : Editor {
 						return;
 					}
 					TerrainData terData = ter.terrainData;
-					Undo.RegisterUndo(terData, "Terrain Erosion");
+					Undo.RecordObject(terData, "Terrain Erosion");
 					// Start time...
 					DateTime startTime = DateTime.Now;
 					TerrainToolkit.ErosionProgressDelegate erosionProgressDelegate = new TerrainToolkit.ErosionProgressDelegate(updateErosionProgress);
@@ -747,7 +747,7 @@ public class TerrainToolkitEditor : Editor {
 						return;
 					}
 					TerrainData terData = ter.terrainData;
-					Undo.RegisterUndo(terData, "Terrain Erosion");
+					Undo.RecordObject(terData, "Terrain Erosion");
 					// Start time...
 					DateTime startTime = DateTime.Now;
 					TerrainToolkit.ErosionProgressDelegate erosionProgressDelegate = new TerrainToolkit.ErosionProgressDelegate(updateErosionProgress);
@@ -832,7 +832,7 @@ public class TerrainToolkitEditor : Editor {
 						return;
 					}
 					TerrainData terData = ter.terrainData;
-					Undo.RegisterUndo(terData, "Terrain Erosion");
+					Undo.RecordObject(terData, "Terrain Erosion");
 					// Start time...
 					DateTime startTime = DateTime.Now;
 					TerrainToolkit.ErosionProgressDelegate erosionProgressDelegate = new TerrainToolkit.ErosionProgressDelegate(updateErosionProgress);
@@ -1193,7 +1193,7 @@ public class TerrainToolkitEditor : Editor {
 					return;
 				}
 				TerrainData terData = ter.terrainData;
-				Undo.RegisterUndo(terData, "Terrain Erosion Brush");
+				Undo.RecordObject(terData, "Terrain Erosion Brush");
 			}
 			terrain.isBrushPainting = true;
 		} else {
