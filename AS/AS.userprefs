@@ -1,14 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Assets\Standard Assets\FPSInputController.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\..\Downloads\RTS-TD\RTS-TD\Assets\Scripts\Units\AstarAI.cs">
     <Files>
-      <File FileName="Assets\Scripts\Player\Select.cs" Line="14" Column="30" />
-      <File FileName="Assets\Scripts\Player\interact.cs" Line="17" Column="3" />
-      <File FileName="Assets\Assets\Standard Assets\CharacterMotor.js" Line="339" Column="18" />
-      <File FileName="..\..\..\..\Dropbox\Games\Unity\Stealth\Assets\Done\DoneScripts\AlarmSystems\DoneLaserPlayerDetection.cs" Line="7" Column="66" />
+      <File FileName="Assets\Assets\Standard Assets\FPSInputController.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Player\Select.cs" Line="16" Column="7" />
+      <File FileName="Assets\Scripts\Player\interact.cs" Line="1" Column="1" />
+      <File FileName="Assets\Assets\Standard Assets\CharacterMotor.js" Line="467" Column="3" />
+      <File FileName="..\..\..\..\Dropbox\Games\Unity\Stealth\Assets\Done\DoneScripts\AlarmSystems\DoneLaserPlayerDetection.cs" Line="1" Column="1" />
       <File FileName="..\..\..\..\Dropbox\Games\Unity\Stealth\Assets\Done\DoneScripts\UnappliedScripts\DoneTags.cs" Line="1" Column="1" />
       <File FileName="..\..\..\..\Dropbox\Games\Unity\Stealth\Assets\Done\DoneScripts\AlarmSystems\DoneLaserSwitchDeactivation.cs" Line="1" Column="1" />
-      <File FileName="Assets\Assets\Standard Assets\FPSInputController.js" Line="29" Column="3" />
+      <File FileName="Assets\Assets\Standard Assets\FPSInputController.js" Line="13" Column="2" />
+      <File FileName="..\..\..\..\Downloads\RTS-TD\RTS-TD\Assets\Scripts\Units\AstarAI.cs" Line="23" Column="37" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
