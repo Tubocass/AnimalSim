@@ -2,16 +2,20 @@
 using System.Collections;
 
 public class interact : MonoBehaviour {
-
+	private  bool bSeen = false;
 	
 	// Update is called once per frame
-	void Update () {
-
-		renderer.material.color = Color.white;
-	
+	void Update () 
+	{
+		if (bSeen)
+			renderer.material.color = Color.red;
+		else renderer.material.color = Color.white;
 	}
-public void OnLookEnter(){
-		renderer.material.color = Color.red;
+
+	public void isSeen()
+	{
+
+		bSeen = !bSeen;
 
 	}
 }

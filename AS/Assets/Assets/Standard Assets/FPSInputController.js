@@ -1,4 +1,7 @@
 private var motor : CharacterMotor;
+private var speed;
+public var sprint = 2;
+public var sneak = .5;
 
 // Use this for initialization
 function Awake () {
@@ -6,7 +9,8 @@ function Awake () {
 }
 
 // Update is called once per frame
-function Update () {
+function Update () 
+{
 	// Get the input vector from keyboard or analog stick
 	var directionVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 	
@@ -22,6 +26,7 @@ function Update () {
 		// Make the input vector more sensitive towards the extremes and less sensitive in the middle
 		// This makes it easier to control slow speeds when using analog sticks
 		directionLength = directionLength * directionLength;
+		
 		
 		// Multiply the normalized direction vector by the modified length
 		directionVector = directionVector * directionLength;
