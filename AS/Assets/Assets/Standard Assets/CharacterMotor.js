@@ -179,6 +179,22 @@ function Awake () {
 	controller = GetComponent (CharacterController);
 	tr = transform;
 }
+private function ModifySpeed()
+{
+	var temp = movement.maxForwardSpeed;
+	
+	if (Input.GetButton("Sneak"))
+	{
+		movement.maxForwardSpeed = 5;
+		
+	}else movement.maxForwardSpeed = 10;
+	if (Input.GetButton("Sprint"))
+	{
+		movement.maxForwardSpeed = 40;
+		
+	}else movement.maxForwardSpeed = 10;
+			
+}
 
 private function UpdateFunction () {
 	// We copy the actual velocity into a temporary variable that we can manipulate.
@@ -186,6 +202,8 @@ private function UpdateFunction () {
 	
 	// Update velocity based on input
 	velocity = ApplyInputVelocityChange(velocity);
+	
+	ModifySpeed();
 	
 	// Apply gravity and jumping force
 	velocity = ApplyGravityAndJumping (velocity);
@@ -383,6 +401,7 @@ private function ApplyInputVelocityChange (velocity : Vector3) {
 		velocity.y = Mathf.Min(velocity.y, 0);
 	}
 	
+	
 	return velocity;
 }
 
@@ -523,7 +542,9 @@ private function IsGroundedTest () {
 function GetMaxAcceleration (grounded : boolean) : float {
 	// Maximum acceleration on ground and in air
 	if (grounded)
+	{
 		return movement.maxGroundAcceleration;
+	}
 	else
 		return movement.maxAirAcceleration;
 }

@@ -21,6 +21,8 @@ public class AstarAI : MonoBehaviour {
  
     //The waypoint we are currently moving towards
     private int currentWaypoint = 0;
+
+	public int counter = 120;
 	
 	
 	public void Start () {
@@ -40,6 +42,7 @@ public class AstarAI : MonoBehaviour {
             path = p;
             //Reset the waypoint counter
             currentWaypoint = 0;
+
         }
     }
  
@@ -49,8 +52,16 @@ public class AstarAI : MonoBehaviour {
             return;
         }
         
-        if (currentWaypoint >= path.vectorPath.Count) {
+        if (currentWaypoint >= path.vectorPath.Count) 	
+		{
             Debug.Log ("End Of Path Reached");
+			if (counter<=0)
+			{
+				targetPosition = target.transform.position;
+				seeker.StartPath (transform.position,targetPosition, OnPathComplete);
+				counter = 120;
+			}
+			counter -=1;
             return;
         }
         
@@ -65,6 +76,8 @@ public class AstarAI : MonoBehaviour {
             currentWaypoint++;
             return;
         }
+
+
     }
 	
 }
