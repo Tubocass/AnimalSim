@@ -187,10 +187,10 @@ private function ModifySpeed()
 	{
 		movement.maxForwardSpeed = 5;
 		
-	}else movement.maxForwardSpeed = 10;
+	}else
 	if (Input.GetButton("Sprint"))
 	{
-		movement.maxForwardSpeed = 40;
+		movement.maxForwardSpeed = 20;
 		
 	}else movement.maxForwardSpeed = 10;
 			
