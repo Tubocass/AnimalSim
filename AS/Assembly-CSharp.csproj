@@ -56,6 +56,7 @@
      <Compile Include="Assets\AstarPathfindingProject\Core\GraphUpdateShape.cs" />
      <Compile Include="Assets\AstarPathfindingProject\Core\Misc\AnimationLink.cs" />
      <Compile Include="Assets\AstarPathfindingProject\Core\Misc\AstarDebugger.cs" />
+     <Compile Include="Assets\AstarPathfindingProject\Core\Misc\AstarEnumFlagAttr.cs" />
      <Compile Include="Assets\AstarPathfindingProject\Core\Misc\BinaryHeap.cs" />
      <Compile Include="Assets\AstarPathfindingProject\Core\Misc\GraphEditorBase.cs" />
      <Compile Include="Assets\AstarPathfindingProject\Core\Misc\GraphModifier.cs" />
@@ -68,11 +69,14 @@
      <Compile Include="Assets\AstarPathfindingProject\Core\Misc\PathPool.cs" />
      <Compile Include="Assets\AstarPathfindingProject\Core\Misc\StackPool.cs" />
      <Compile Include="Assets\AstarPathfindingProject\Core\Misc\ThreadControlQueue.cs" />
+     <Compile Include="Assets\AstarPathfindingProject\Core\Misc\WindowsStoreCompatibility.cs" />
      <Compile Include="Assets\AstarPathfindingProject\Core\Nodes\GraphNode.cs" />
      <Compile Include="Assets\AstarPathfindingProject\Core\Path.cs" />
      <Compile Include="Assets\AstarPathfindingProject\Core\PathHandler.cs" />
      <Compile Include="Assets\AstarPathfindingProject\Core\Serialization\JsonConverters.cs" />
      <Compile Include="Assets\AstarPathfindingProject\Core\Serialization\JsonSerializer.cs" />
+     <Compile Include="Assets\AstarPathfindingProject\Core\Serialization\SimpleJsonReplacement.cs" />
+     <Compile Include="Assets\AstarPathfindingProject\Core\Serialization\SimpleZipReplacement.cs" />
      <Compile Include="Assets\AstarPathfindingProject\Core\astarclasses.cs" />
      <Compile Include="Assets\AstarPathfindingProject\ExampleScenes\Example12_Procedural\ProceduralGridMover.cs" />
      <Compile Include="Assets\AstarPathfindingProject\ExampleScenes\Example12_Procedural\ProceduralWorld.cs" />
@@ -135,11 +139,11 @@
      <None Include="Assets\AstarPathfindingProject\Plugins\JsonFx\Readme.txt" />
      <None Include="Assets\AstarPathfindingProject\link.xml" />
      <None Include="Assets\TerrainToolkit\Read me.txt" />
- <Reference Include="Pathfinding.Ionic.Zip.Reduced">
- <HintPath>Assets\AstarPathfindingProject\Plugins\DotNetZip\Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
- </Reference>
  <Reference Include="Pathfinding.JsonFx">
  <HintPath>Assets\AstarPathfindingProject\Plugins\JsonFx\Pathfinding.JsonFx.dll</HintPath>
+ </Reference>
+ <Reference Include="Pathfinding.Ionic.Zip.Reduced">
+ <HintPath>Assets\AstarPathfindingProject\Plugins\DotNetZip\Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

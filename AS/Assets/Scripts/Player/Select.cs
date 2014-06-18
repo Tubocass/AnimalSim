@@ -3,13 +3,15 @@ using System.Collections;
 
 public class Select : MonoBehaviour {
 public RaycastHit hit;
-public GUITexture crosshair;
+
+Texture texture;
 Icons icons;
 
 
 void Start()
 {
-	icons = new Icons();
+	icons = GetComponent<Icons>();
+	
 }
 
 // Update is called once per frame
@@ -22,14 +24,17 @@ void Update ()
 			if(hit.collider.gameObject != null)
 			{
 				if(hit.collider.gameObject == GameObject.FindGameObjectWithTag("Shit"))
-				crosshair = icons.sniff;
-
-				if(Input.GetButtonDown("Fire1"))
 				{
 					Debug.Log("Ping");
-					hit.collider.gameObject.GetComponent<interact>().isSeen();
-				}else Debug.Log("Gnip");
-			}
+					GetComponent<GUITexture>().texture = icons.sniff;
+
+					if(Input.GetButtonDown("Fire1"))
+					{
+
+						hit.collider.gameObject.GetComponent<interact>().isSeen();
+					}
+				}else GetComponent<GUITexture>().texture = icons.none;
+			} 
 		}
 }
 }

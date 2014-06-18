@@ -3,11 +3,11 @@ using System.Collections;
 
 public class Icons : MonoBehaviour 
 {
-
-	public GUITexture howl;
-	public GUITexture sniff;
-	public GUITexture bite;
-	public GUITexture grab;
-	public GUITexture eat;
-	public GUITexture pee;
+	public Texture none;
+	public Texture howl;
+	public Texture sniff;
+	public Texture bite;
+	public Texture grab;
+	public Texture eat;
+	public Texture pee;
 }
