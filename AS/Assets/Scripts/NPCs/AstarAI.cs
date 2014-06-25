@@ -26,6 +26,7 @@ public class AstarAI : MonoBehaviour {
 	
 	
 	public void Start () {
+		target = ClosestFood().transform;
 		targetPosition = target.transform.position;
 		//Get a reference to the Seeker component we added earlier
         seeker = GetComponent<Seeker>();
@@ -38,12 +39,12 @@ public class AstarAI : MonoBehaviour {
 	
     public void OnPathComplete (Path p) {
         //Debug.Log ("Yey, we got a path back. Did it have an error? "+p.error);
-        if (!p.error) {
+        if (!p.error) 
+		{
             path = p;
             //Reset the waypoint counter
             currentWaypoint = 0;
-
-        }
+		}else Debug.Log(p.error);
     }
  
     public void FixedUpdate () {
@@ -57,10 +58,11 @@ public class AstarAI : MonoBehaviour {
             Debug.Log ("End Of Path Reached");
 			if (counter<=0)
 			{
-				targetPosition = target.transform.position;
+				targetPosition = ClosestFood().transform.position;
 				seeker.StartPath (transform.position,targetPosition, OnPathComplete);
 				counter = 120;
 			}
+		
 			counter -=1;
             return;
         }
@@ -79,5 +81,27 @@ public class AstarAI : MonoBehaviour {
 
 
     }
+	private GameObject ClosestFood()
+	{
+		GameObject[] foods;
+		foods = GameObject.FindGameObjectsWithTag("Food");
+		GameObject closest = null;
+		float distance = Mathf.Infinity;
+		Vector3 position = transform.position;
+
+		foreach (GameObject fo in foods) 
+		{
+			Vector3 diff = fo.transform.position - position;
+			float curDistance = diff.sqrMagnitude;
+			if (curDistance < distance) 
+			{
+				closest = fo;
+				distance = curDistance;
+			}
+		}
+		return closest;
+	}
+			
+
 	
 }
