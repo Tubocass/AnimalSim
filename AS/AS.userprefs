@@ -1,12 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Player\Select.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Player/ScratchAction.cs">
     <Files>
-      <File FileName="AS.sln" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Player\interact.cs" Line="11" Column="4" />
-      <File FileName="Assets\Scripts\Player\Select.cs" Line="20" Column="3" />
-      <File FileName="Assets\Scripts\GameController\Icons.cs" Line="1" Column="1" />
-      <File FileName="Assets\HerdController.cs" Line="9" Column="3" />
+      <File FileName="Assets/Scripts/Player/ShitAction.cs" Line="22" Column="4" />
+      <File FileName="Assets/Scripts/Player/Select.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/GameController/Icons.cs" Line="12" Column="21" />
+      <File FileName="Assets/Scripts/Player/ScratchAction.cs" Line="20" Column="19" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

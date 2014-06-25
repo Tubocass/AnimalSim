@@ -122,7 +122,9 @@
      <Compile Include="Assets\Scripts\GameController\GameControl.cs" />
      <Compile Include="Assets\Scripts\GameController\Icons.cs" />
      <Compile Include="Assets\Scripts\NPCs\AstarAI.cs" />
+     <Compile Include="Assets\Scripts\Player\HowlAction.cs" />
      <Compile Include="Assets\Scripts\Player\MouseLook.cs" />
+     <Compile Include="Assets\Scripts\Player\ScratchAction.cs" />
      <Compile Include="Assets\Scripts\Player\Select.cs" />
      <Compile Include="Assets\Scripts\Player\ShitAction.cs" />
      <Compile Include="Assets\Scripts\Player\interact.cs" />
