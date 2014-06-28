@@ -85,10 +85,11 @@ public class AstarAI : MonoBehaviour {
 	{
 		GameObject[] foods;
 		foods = GameObject.FindGameObjectsWithTag("Food");
-		GameObject closest = null;
-		float distance = Mathf.Infinity;
+		GameObject closest;
+		closest = foods[Random.Range(0,foods.Length)];
+		float distance = 500;
 		Vector3 position = transform.position;
-
+		/*
 		foreach (GameObject fo in foods) 
 		{
 			Vector3 diff = fo.transform.position - position;
@@ -98,7 +99,7 @@ public class AstarAI : MonoBehaviour {
 				closest = fo;
 				distance = curDistance;
 			}
-		}
+		}*/
 		return closest;
 	}
 			
