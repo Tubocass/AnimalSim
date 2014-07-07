@@ -5,36 +5,33 @@ using Pathfinding;
 public class AstarAI : MonoBehaviour {
 	
 	public Transform target;
-	public Vector3 targetPosition;
+	public Vector3 targetLocation;
 	
     private Seeker seeker;
     private CharacterController controller;
+	public Herd herdController;
  
     //The calculated path
     public Path path;
-    
     //The AI's speed per second
     public float speed = 100;
-    
     //The max distance from the AI to a waypoint for it to continue to the next waypoint
     public float nextWaypointDistance = 3;
- 
     //The waypoint we are currently moving towards
     private int currentWaypoint = 0;
 
 	public int counter = 120;
 	
 	
-	public void Start () {
-		target = ClosestFood().transform;
-		targetPosition = target.transform.position;
+	public void Start () { 
+		//targetLocation = herdController.getTargetLocation();
 		//Get a reference to the Seeker component we added earlier
         seeker = GetComponent<Seeker>();
         controller = GetComponent<CharacterController>();
         
 		
 		//Start a new path to the targetPosition, return the result to the OnPathComplete function
-		seeker.StartPath (transform.position,targetPosition, OnPathComplete);
+		//seeker.StartPath (transform.position,targetLocation, OnPathComplete);
 	}
 	
     public void OnPathComplete (Path p) {
@@ -46,6 +43,10 @@ public class AstarAI : MonoBehaviour {
             currentWaypoint = 0;
 		}else Debug.Log(p.error);
     }
+	public void StartPath()
+	{
+		seeker.StartPath (transform.position,targetLocation, OnPathComplete);
+	}
  
     public void FixedUpdate () {
         if (path == null) {
@@ -58,8 +59,9 @@ public class AstarAI : MonoBehaviour {
             Debug.Log ("End Of Path Reached");
 			if (counter<=0)
 			{
-				targetPosition = ClosestFood().transform.position;
-				seeker.StartPath (transform.position,targetPosition, OnPathComplete);
+				targetLocation = herdController.getTargetLocation();
+				if (Vector3.Distance (transform.position,targetLocation) >5)
+				seeker.StartPath (transform.position,targetLocation, OnPathComplete);
 				counter = 120;
 			}
 		
@@ -81,27 +83,7 @@ public class AstarAI : MonoBehaviour {
 
 
     }
-	private GameObject ClosestFood()
-	{
-		GameObject[] foods;
-		foods = GameObject.FindGameObjectsWithTag("Food");
-		GameObject closest;
-		closest = foods[Random.Range(0,foods.Length)];
-		float distance = 500;
-		Vector3 position = transform.position;
-		/*
-		foreach (GameObject fo in foods) 
-		{
-			Vector3 diff = fo.transform.position - position;
-			float curDistance = diff.sqrMagnitude;
-			if (curDistance < distance) 
-			{
-				closest = fo;
-				distance = curDistance;
-			}
-		}*/
-		return closest;
-	}
+
 			
 
 	
