@@ -11,7 +11,7 @@ public class NPCSight : MonoBehaviour
 	private NavMeshAgent nav;                       // Reference to the NavMeshAgent component.
 	private SphereCollider col;                     // Reference to the sphere collider trigger component.
 	private Animator anim;                          // Reference to the Animator.
-	//private LastPlayerSighting lastPlayerSighting;  // Reference to last global sighting of the player.
+   //private LastPlayerSighting lastPlayerSighting;  // Reference to last global sighting of the player.
 	private GameObject NPC;                      // Reference to the player.
 	private Animator NPCAnim;                    // Reference to the player's animator component.
 	//private PlayerHealth playerHealth;              // Reference to the player's health script.
@@ -25,21 +25,21 @@ public class NPCSight : MonoBehaviour
 		nav = GetComponent<NavMeshAgent>();
 		col = GetComponent<SphereCollider>();
 		anim = GetComponent<Animator>();
-	//	lastPlayerSighting = GameObject.FindGameObjectWithTag(Tags.gameController).GetComponent<LastPlayerSighting>();
+		//lastPlayerSighting = GameObject.FindGameObjectWithTag(Tags.gameController).GetComponent<LastPlayerSighting>();
 		NPC = GameObject.FindGameObjectWithTag(Tags.nPC);
 		NPCAnim = NPC.GetComponent<Animator>();
 
-		hash = GameObject.FindGameObjectWithTag(Tags.gameController).GetComponent<HashIDs>();
+		hash = GameObject.FindGameObjectWithTag(Tags.player).GetComponent<HashIDs>();
 		
 		// Set the personal sighting and the previous sighting to the reset position.
-	//	personalLastSighting = lastPlayerSighting.resetPosition;
-	//	previousSighting = lastPlayerSighting.resetPosition;
+		//personalLastSighting = lastPlayerSighting.resetPosition;
+		//previousSighting = lastPlayerSighting.resetPosition;
 	}
 	
 	
 	void Update ()
 	{
-		// If the last global sighting of the player has changed...
+		//If the last global sighting of the player has changed...
 	//	if(lastPlayerSighting.position != previousSighting)
 			// ... then update the personal sighting to be the same as the global sighting.
 		//	personalLastSighting = lastPlayerSighting.position;
@@ -48,12 +48,12 @@ public class NPCSight : MonoBehaviour
 	//	previousSighting = lastPlayerSighting.position;
 		
 		// If the player is alive...
-		//if(playerHealth.health > 0f)
+	//	if(playerHealth.health > 0f)
 			// ... set the animator parameter to whether the player is in sight or not.
-		//	anim.SetBool(hash.playerInSightBool, playerInSight);
-		//else
+	//		anim.SetBool(hash.playerInSightBool, playerInSight);
+	//	else
 			// ... set the animator parameter to false.
-		//	anim.SetBool(hash.playerInSightBool, false);
+			anim.SetBool(hash.playerInSightBool, false);
 	}
 
 	
