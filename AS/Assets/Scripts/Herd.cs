@@ -12,8 +12,8 @@ public class Herd : MonoBehaviour
 	Vector3 targetLocation;
 	void Start()
 	{
+		targetLocation = ClosestFood(transform.position);
 		herd = Spawn();
-		targetLocation = ClosestFood();
 
 		foreach(GameObject member in herd)
 		{
@@ -47,15 +47,14 @@ public class Herd : MonoBehaviour
 		return herd;
 	}
 
-	private Vector3 ClosestFood()
+	public Vector3 ClosestFood(Vector3 position)
 	{
 		GameObject[] foods;
 		foods = GameObject.FindGameObjectsWithTag("Food");
 		GameObject closest;
 		closest = foods[Random.Range(0,foods.Length)];//Not closet, just random
 		float distance = 500;
-		Vector3 position = transform.position;
-		/*
+
 		foreach (GameObject fo in foods) 
 		{
 			Vector3 diff = fo.transform.position - position;
@@ -65,7 +64,7 @@ public class Herd : MonoBehaviour
 				closest = fo;
 				distance = curDistance;
 			}
-		}*/
+		}
 		return closest.transform.position;
 	}
 

@@ -16,25 +16,25 @@ public class AstarAI : MonoBehaviour {
     //The AI's speed per second
     public float speed = 100;
     //The max distance from the AI to a waypoint for it to continue to the next waypoint
-    public float nextWaypointDistance = 3;
+    public float nextWaypointDistance = 1;
     //The waypoint we are currently moving towards
     private int currentWaypoint = 0;
 
 	public int counter = 120;
+	Vector3 dir;
 	
 	
-	public void Start () { 
-		//targetLocation = herdController.getTargetLocation();
-		//Get a reference to the Seeker component we added earlier
+	public void Start () 
+	{ 
+		targetLocation = herdController.getTargetLocation();
         seeker = GetComponent<Seeker>();
         controller = GetComponent<CharacterController>();
-        
-		
-		//Start a new path to the targetPosition, return the result to the OnPathComplete function
-		//seeker.StartPath (transform.position,targetLocation, OnPathComplete);
+		StartPath();
+
 	}
 	
-    public void OnPathComplete (Path p) {
+    public void OnPathComplete (Path p) 
+	{
         //Debug.Log ("Yey, we got a path back. Did it have an error? "+p.error);
         if (!p.error) 
 		{
@@ -48,8 +48,10 @@ public class AstarAI : MonoBehaviour {
 		seeker.StartPath (transform.position,targetLocation, OnPathComplete);
 	}
  
-    public void FixedUpdate () {
-        if (path == null) {
+    public void FixedUpdate () 
+	{
+        if (path == null) 
+		{
             //We have no path to move after yet
             return;
         }
@@ -59,9 +61,11 @@ public class AstarAI : MonoBehaviour {
             Debug.Log ("End Of Path Reached");
 			if (counter<=0)
 			{
-				targetLocation = herdController.getTargetLocation();
-				if (Vector3.Distance (transform.position,targetLocation) >5)
-				seeker.StartPath (transform.position,targetLocation, OnPathComplete);
+				targetLocation = herdController.ClosestFood(transform.position);
+				if (Vector3.Distance (transform.position,targetLocation) >nextWaypointDistance)
+				{
+					seeker.StartPath (transform.position,targetLocation, OnPathComplete);
+				}
 				counter = 120;
 			}
 		
@@ -70,21 +74,17 @@ public class AstarAI : MonoBehaviour {
         }
         
         //Direction to the next waypoint
-        Vector3 dir = (path.vectorPath[currentWaypoint]-transform.position).normalized;
+        dir = (path.vectorPath[currentWaypoint]-transform.position).normalized;
         dir *= speed * Time.fixedDeltaTime;
         controller.Move (dir);
         
         //Check if we are close enough to the next waypoint
         //If we are, proceed to follow the next waypoint
-        if (Vector3.Distance (transform.position,path.vectorPath[currentWaypoint]) < nextWaypointDistance) {
+        if (Vector3.Distance (transform.position,path.vectorPath[currentWaypoint]) < nextWaypointDistance) 
+		{
             currentWaypoint++;
             return;
         }
-
-
     }
-
-			
-
 	
 }
