@@ -3,13 +3,9 @@ using System.Collections;
 
 public class Tags : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	//a list of tag strings.
+	public const string gameController = "GameController";
+	public const string nPC = "NPC";
+
+
 }
