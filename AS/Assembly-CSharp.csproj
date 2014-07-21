@@ -118,11 +118,16 @@
      <Compile Include="Assets\AstarPathfindingProject\Utilities\SizeProfiler.cs" />
      <Compile Include="Assets\AstarPathfindingProject\Utilities\UnityReferenceHelper.cs" />
      <Compile Include="Assets\AstarPathfindingProject\changelog.cs" />
-     <Compile Include="Assets\NPCActions.cs" />
+     <Compile Include="Assets\Scripts\AnimatorSetup.cs" />
      <Compile Include="Assets\Scripts\GameController\GameControl.cs" />
+     <Compile Include="Assets\Scripts\GameController\HashIDs.cs" />
      <Compile Include="Assets\Scripts\GameController\Icons.cs" />
-     <Compile Include="Assets\Scripts\Herd.cs" />
+     <Compile Include="Assets\Scripts\GameController\Tags.cs" />
      <Compile Include="Assets\Scripts\NPCs\AstarAI.cs" />
+     <Compile Include="Assets\Scripts\NPCs\Herd.cs" />
+     <Compile Include="Assets\Scripts\NPCs\NPCActions.cs" />
+     <Compile Include="Assets\Scripts\NPCs\NPCSight.cs" />
+     <Compile Include="Assets\Scripts\NPCs\NPCanimation.cs" />
      <Compile Include="Assets\Scripts\Player\HowlAction.cs" />
      <Compile Include="Assets\Scripts\Player\MouseLook.cs" />
      <Compile Include="Assets\Scripts\Player\ScratchAction.cs" />
@@ -130,7 +135,6 @@
      <Compile Include="Assets\Scripts\Player\ShitAction.cs" />
      <Compile Include="Assets\Scripts\Player\interact.cs" />
      <Compile Include="Assets\Scripts\Spawner.cs" />
-     <Compile Include="Assets\Scripts\Tags.cs" />
      <Compile Include="Assets\TerrainToolkit\TerrainToolkit.cs" />
      <None Include="Assets\AstarPathfindingProject\Editor\EditorAssets\Materials\Navmesh2.shader" />
      <None Include="Assets\AstarPathfindingProject\Plugins\DotNetZip\License.txt" />
