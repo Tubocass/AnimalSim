@@ -6,7 +6,8 @@ public class AstarAI : MonoBehaviour {
 	
 	public Transform target;
 	public Vector3 targetLocation;
-	
+
+	private Animator animator;
     private Seeker seeker;
     private CharacterController controller;
 	public Herd herdController;
@@ -15,6 +16,8 @@ public class AstarAI : MonoBehaviour {
     public Path path;
     //The AI's speed per second
     public float speed = 100;
+	public float step = 5;
+	Vector3 newDir;
     //The max distance from the AI to a waypoint for it to continue to the next waypoint
     public float nextWaypointDistance = 1;
     //The waypoint we are currently moving towards
@@ -31,6 +34,11 @@ public class AstarAI : MonoBehaviour {
         controller = GetComponent<CharacterController>();
 		StartPath();
 
+	}
+
+	void OnCollisionEnter(Collider other) {
+		if (other.gameObject.CompareTag("Food"))
+			Destroy(other.gameObject);
 	}
 	
     public void OnPathComplete (Path p) 
@@ -50,6 +58,7 @@ public class AstarAI : MonoBehaviour {
  
     public void FixedUpdate () 
 	{
+
         if (path == null) 
 		{
             //We have no path to move after yet
@@ -64,7 +73,7 @@ public class AstarAI : MonoBehaviour {
 				targetLocation = herdController.ClosestFood(transform.position);
 				if (Vector3.Distance (transform.position,targetLocation) >nextWaypointDistance)
 				{
-					seeker.StartPath (transform.position,targetLocation, OnPathComplete);
+					StartPath();
 				}
 				counter = 120;
 			}
@@ -75,6 +84,10 @@ public class AstarAI : MonoBehaviour {
         
         //Direction to the next waypoint
         dir = (path.vectorPath[currentWaypoint]-transform.position).normalized;
+		Vector3 targetdir = path.vectorPath[currentWaypoint]-transform.position;
+		step *= Time.deltaTime;
+		newDir = Vector3.RotateTowards(transform.forward, targetdir, 3, 0.0F);
+		transform.rotation = Quaternion.LookRotation(newDir);
         dir *= speed * Time.fixedDeltaTime;
         controller.Move (dir);
         

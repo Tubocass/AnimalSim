@@ -123,6 +123,7 @@
      <Compile Include="Assets\Scripts\GameController\HashIDs.cs" />
      <Compile Include="Assets\Scripts\GameController\Icons.cs" />
      <Compile Include="Assets\Scripts\GameController\Tags.cs" />
+     <Compile Include="Assets\Scripts\NPCs\Anim.cs" />
      <Compile Include="Assets\Scripts\NPCs\AstarAI.cs" />
      <Compile Include="Assets\Scripts\NPCs\Herd.cs" />
      <Compile Include="Assets\Scripts\NPCs\NPCActions.cs" />

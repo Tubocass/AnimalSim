@@ -15,12 +15,16 @@ public class Herd : MonoBehaviour
 		targetLocation = ClosestFood(transform.position);
 		herd = Spawn();
 
-		foreach(GameObject member in herd)
+		/*foreach(GameObject member in herd)
 		{
 			AstarAI aStar = member.GetComponent<AstarAI>();
 			aStar.targetLocation = targetLocation;
 			aStar.StartPath();
-		}
+		}*/
+	}
+	void Update()
+	{
+
 	}
 	public Vector3 getTargetLocation()
 	{
