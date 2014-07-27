@@ -81,6 +81,7 @@ ModelImporter:
     400074: UpperMouth
     4300000: Big_Cat
     9500000: //RootNode
+    11100000: //RootNode
     13700000: Big_Cat
   materials:
     importMaterials: 1
@@ -90,6 +91,7 @@ ModelImporter:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     optimizeGameObjects: 0
+    motionNodeName: 
     animationCompression: 1
     animationRotationError: .5
     animationPositionError: .5
@@ -132,6 +134,6 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: Root
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 1
   additionalBone: 0
   userData: 

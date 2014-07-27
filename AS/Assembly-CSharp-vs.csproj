@@ -119,6 +119,7 @@
      <Compile Include="Assets\AstarPathfindingProject\Utilities\UnityReferenceHelper.cs" />
      <Compile Include="Assets\AstarPathfindingProject\changelog.cs" />
      <Compile Include="Assets\HerdController.cs" />
+     <Compile Include="Assets\Movement.cs" />
      <Compile Include="Assets\NPCSight.cs" />
      <Compile Include="Assets\Scripts\GameController\AnimatorSetup.cs" />
      <Compile Include="Assets\Scripts\GameController\GameControl.cs" />
