@@ -87,13 +87,114 @@ ModelImporter:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     optimizeGameObjects: 0
+    motionNodeName: 
     animationCompression: 0
     animationRotationError: .5
     animationPositionError: .5
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Big_Cat_Idle
+      takeName: Big_Cat_Idle
+      firstFrame: 0
+      lastFrame: 59
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Root
+        weight: 1
+      - path: Root/Hips
+        weight: 1
+      - path: Root/Hips/LeftUpLeg
+        weight: 1
+      - path: Root/Hips/LeftUpLeg/LeftLeg
+        weight: 1
+      - path: Root/Hips/LeftUpLeg/LeftLeg/LeftFoot
+        weight: 1
+      - path: Root/Hips/LeftUpLeg/LeftLeg/LeftFoot/LeftToeBase
+        weight: 1
+      - path: Root/Hips/LeftUpLeg/LeftLeg/LeftFoot/LeftToeBase/LeftToe1
+        weight: 1
+      - path: Root/Hips/RightUpLeg
+        weight: 1
+      - path: Root/Hips/RightUpLeg/RightLeg
+        weight: 1
+      - path: Root/Hips/RightUpLeg/RightLeg/RightFoot
+        weight: 1
+      - path: Root/Hips/RightUpLeg/RightLeg/RightFoot/RightToeBase
+        weight: 1
+      - path: Root/Hips/RightUpLeg/RightLeg/RightFoot/RightToeBase/RightToe1
+        weight: 1
+      - path: Root/Hips/Spine
+        weight: 1
+      - path: Root/Hips/Spine/Spine1
+        weight: 1
+      - path: Root/Hips/Spine/Spine1/LeftArm
+        weight: 1
+      - path: Root/Hips/Spine/Spine1/LeftArm/LeftForeArm
+        weight: 1
+      - path: Root/Hips/Spine/Spine1/LeftArm/LeftForeArm/LeftHand
+        weight: 1
+      - path: Root/Hips/Spine/Spine1/LeftArm/LeftForeArm/LeftHand/LefthandEnd
+        weight: 1
+      - path: Root/Hips/Spine/Spine1/RightArm
+        weight: 1
+      - path: Root/Hips/Spine/Spine1/RightArm/RightForeArm
+        weight: 1
+      - path: Root/Hips/Spine/Spine1/RightArm/RightForeArm/RightHand
+        weight: 1
+      - path: Root/Hips/Spine/Spine1/RightArm/RightForeArm/RightHand/RightHandEnd
+        weight: 1
+      - path: Root/Hips/Spine/Spine1/Spine2
+        weight: 1
+      - path: Root/Hips/Spine/Spine1/Spine2/Neck
+        weight: 1
+      - path: Root/Hips/Spine/Spine1/Spine2/Neck/Head
+        weight: 1
+      - path: Root/Hips/Spine/Spine1/Spine2/Neck/Head/Jaw
+        weight: 1
+      - path: Root/Hips/Spine/Spine1/Spine2/Neck/Head/Jaw/jawEnd
+        weight: 1
+      - path: Root/Hips/Spine/Spine1/Spine2/Neck/Head/L_Ear
+        weight: 1
+      - path: Root/Hips/Spine/Spine1/Spine2/Neck/Head/L_EyeBrow
+        weight: 1
+      - path: Root/Hips/Spine/Spine1/Spine2/Neck/Head/R_Ear
+        weight: 1
+      - path: Root/Hips/Spine/Spine1/Spine2/Neck/Head/R_EyeBrow
+        weight: 1
+      - path: Root/Hips/Spine/Spine1/Spine2/Neck/Head/UpperMouth
+        weight: 1
+      - path: Root/Hips/Tail
+        weight: 1
+      - path: Root/Hips/Tail/Tail1
+        weight: 1
+      - path: Root/Hips/Tail/Tail1/Tail2
+        weight: 1
+      - path: Root/Hips/Tail/Tail1/Tail2/Tail3
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []

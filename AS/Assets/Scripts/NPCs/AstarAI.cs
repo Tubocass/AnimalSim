@@ -36,7 +36,7 @@ public class AstarAI : MonoBehaviour {
 
 	}
 
-	void OnCollisionEnter(Collider other) {
+	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.CompareTag("Food"))
 			Destroy(other.gameObject);
 	}
