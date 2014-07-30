@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 [RequireComponent (typeof(CharacterController))]
@@ -35,7 +35,7 @@ public class Movement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		AIPath speedcheck = new AIPath();
+		//AstarAI speedcheck = new AstarAI();
 
 	//	nPC = GameObject.FindGameObjectWithTag(Tags.food).transform;
 	//	go.transform.LookAt (nPC);
@@ -45,12 +45,12 @@ public class Movement : MonoBehaviour {
 						transform.Rotate (0, Input.GetAxis ("Horizontal") / turnSpeed, 0);
 			print ("ok");
 				}
-		if (speedcheck.speed > 0) {
-						animation.Play ("Big_Cat_Walk");
-				}
-		if (speedcheck.speed == 0){
-					animation.Play("Big_Cat_Idle");
-		}
+	//	if (speedcheck.speed > 0) {
+	//					animation.Play ("Big_Cat_Walk");
+		//		}
+	//	if (speedcheck.speed == 0){
+		//			animation.Play("Big_Cat_Idle");
+	//	}
 				
 
 
