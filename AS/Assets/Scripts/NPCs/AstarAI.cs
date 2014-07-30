@@ -30,16 +30,14 @@ public class AstarAI : MonoBehaviour {
 	public void Start () 
 	{ 
 		targetLocation = herdController.getTargetLocation();
+		//targetLocation.y = 0;
         seeker = GetComponent<Seeker>();
         controller = GetComponent<CharacterController>();
 		StartPath();
 
 	}
 
-	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.CompareTag("Food"))
-			Destroy(other.gameObject);
-	}
+
 	
     public void OnPathComplete (Path p) 
 	{
@@ -71,7 +69,8 @@ public class AstarAI : MonoBehaviour {
 			if (counter<=0)
 			{
 				targetLocation = herdController.ClosestFood(transform.position);
-				if (Vector3.Distance (transform.position,targetLocation) >nextWaypointDistance)
+				targetLocation.y = 0;
+				if (Vector3.Distance (transform.position,targetLocation) >3)
 				{
 					StartPath();
 				}
@@ -85,6 +84,7 @@ public class AstarAI : MonoBehaviour {
         //Direction to the next waypoint
         dir = (path.vectorPath[currentWaypoint]-transform.position).normalized;
 		Vector3 targetdir = path.vectorPath[currentWaypoint]-transform.position;
+		targetdir.y = 0;
 		step *= Time.deltaTime;
 		newDir = Vector3.RotateTowards(transform.forward, targetdir, 3, 0.0F);
 		transform.rotation = Quaternion.LookRotation(newDir);

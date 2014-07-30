@@ -55,21 +55,24 @@ public class Herd : MonoBehaviour
 	{
 		GameObject[] foods;
 		foods = GameObject.FindGameObjectsWithTag("Food");
-		GameObject closest;
-		closest = foods[Random.Range(0,foods.Length)];//Not closet, just random
-		float distance = 500;
-
-		foreach (GameObject fo in foods) 
+		if(foods.Length>0)
 		{
-			Vector3 diff = fo.transform.position - position;
-			float curDistance = diff.sqrMagnitude;
-			if (curDistance < distance) 
+			GameObject closest;
+			closest = foods[Random.Range(0,foods.Length)];//Not closet, just random
+			float distance = 500;
+
+			foreach (GameObject fo in foods) 
 			{
-				closest = fo;
-				distance = curDistance;
+				Vector3 diff = fo.transform.position - position;
+				float curDistance = diff.sqrMagnitude;
+				if (curDistance < distance) 
+				{
+					closest = fo;
+					distance = curDistance;
+				}
 			}
-		}
-		return closest.transform.position;
+			return closest.transform.position;
+		}else return Vector3.zero;
 	}
 
 }

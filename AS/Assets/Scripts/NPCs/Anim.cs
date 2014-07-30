@@ -3,18 +3,18 @@ using System.Collections;
 
 public class Anim : MonoBehaviour {
 
-	Animator animator;
+	//Animator animator;
 
 	void Start()
 	{
-		animator = GetComponent<Animator> ();
+		//animator = GetComponent<Animator> ();
 	}
 
 	void FixedUpdate () 
 	{
-		if(rigidbody.velocity.magnitude<10)
+		//if(rigidbody.velocity.magnitude<10)
 
-			animator.speed = Mathf.Floor(rigidbody.velocity.magnitude);
+			//animator.speed = Mathf.Floor(rigidbody.velocity.magnitude);
 				
 	}
 }
