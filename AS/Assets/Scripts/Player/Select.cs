@@ -5,6 +5,8 @@ public class Select : MonoBehaviour {
 public RaycastHit hit;
 
 Icons icons;
+public GameObject scratch;
+public AudioClip roar;
 
 
 void Start()
@@ -27,7 +29,6 @@ void Update ()
 					//Debug.Log("Ping");
 					case  "Shit":
 						GetComponent<GUITexture>().texture = icons.sniff;
-
 						if(Input.GetButtonDown("Fire1"))
 						{
 
@@ -45,6 +46,19 @@ void Update ()
 							*/
 						}
 					break;
+					case "NPC":
+						GetComponent<GUITexture>().texture = icons.scratch;
+						if(Input.GetButtonDown("Fire1"))
+						{
+							Instantiate(scratch,new Vector3(0,0,1),Quaternion.identity);
+							audio.PlayOneShot(roar);
+							Destroy(hit.collider.gameObject,4);
+							/*
+								 * destroy object
+								 * decrease hunger
+								*/
+						}
+						break;
 
 
 				}

@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Assets\Standard Assets\Character Controllers\Jscripts\CharacterMotor.js" />
      <Compile Include="Assets\Assets\Standard Assets\Character Controllers\Jscripts\FPSInputController.js" />
+     <Compile Include="Assets\Assets\Standard Assets\Character Controllers\Jscripts\Fade.js" />
      <Compile Include="Assets\Assets\Standard Assets\Character Controllers\Jscripts\PlatformInputController.js" />
      <Compile Include="Assets\Assets\Standard Assets\Character Controllers\Jscripts\ThirdPersonCamera.js" />
      <Compile Include="Assets\Assets\Standard Assets\Character Controllers\Jscripts\ThirdPersonController.js" />

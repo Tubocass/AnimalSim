@@ -2,7 +2,8 @@ fileFormatVersion: 2
 guid: cb2c773fd4471a2499292ebeda29910b
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - scratch: {fileID: 100000, guid: c378bbcfb8e207343b3e35d0baf90b6b, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

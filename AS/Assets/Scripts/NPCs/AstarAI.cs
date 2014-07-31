@@ -25,10 +25,11 @@ public class AstarAI : MonoBehaviour {
 	
 	public int counter = 120;
 	Vector3 dir;
-	
+	public float pushPower = 2.0F;
 	
 	public void Start () 
 	{ 
+		animator = GetComponent<Animator> ();
 		targetLocation = herdController.getTargetLocation();
 		//targetLocation.y = 0;
 		seeker = GetComponent<Seeker>();
@@ -37,7 +38,15 @@ public class AstarAI : MonoBehaviour {
 		
 	}
 	
-	
+	void OnControllerColliderHit(ControllerColliderHit hit) {
+		if (hit.gameObject.CompareTag ("Food")) 
+		{
+		Rigidbody body = hit.collider.attachedRigidbody;
+
+		Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
+		body.velocity = pushDir * pushPower;
+		}
+	}
 	
 	public void OnPathComplete (Path p) 
 	{
@@ -80,7 +89,7 @@ public class AstarAI : MonoBehaviour {
 			counter -=1;
 			return;
 		}
-		
+		animator.speed = speed;
 		//Direction to the next waypoint
 		dir = (path.vectorPath[currentWaypoint]-transform.position).normalized;
 		Vector3 targetdir = path.vectorPath[currentWaypoint]-transform.position;

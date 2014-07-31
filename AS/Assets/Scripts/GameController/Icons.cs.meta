@@ -4,12 +4,13 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - none: {fileID: 2800000, guid: 31f2da7b0e60cab4db408a91f09c630d, type: 3}
-  - howl: {fileID: 2800000, guid: b5d2671f44c303148baa831c7f480eee, type: 3}
+  - howl: {instanceID: 0}
   - sniff: {fileID: 2800000, guid: 56947e7222d6afa4a875571e823101ff, type: 3}
   - bite: {instanceID: 0}
   - grab: {instanceID: 0}
   - eat: {instanceID: 0}
   - pee: {instanceID: 0}
+  - scratch: {fileID: 2800000, guid: 8e71af7d7375211458bd2aa7f4e9352f, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
