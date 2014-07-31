@@ -72,7 +72,7 @@ public class Herd : MonoBehaviour
 				}
 			}
 			return closest.transform.position;
-		}else return Vector3.zero;
+		}else return position;
 	}
 
 }
