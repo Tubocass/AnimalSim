@@ -18,6 +18,13 @@ public class Anim : MonoBehaviour {
 		//if(rigidbody.velocity.magnitude<10)
 		animator.SetFloat("Speed",GetComponent<CharacterController>().velocity.magnitude);
 		speed = animator.GetFloat("Speed");
+
+		if (speed > .1) 
+		{
+			float idle = Random.value;
+			animator.SetFloat("Idle",idle);
+
+		}
 				
 	}
 }
