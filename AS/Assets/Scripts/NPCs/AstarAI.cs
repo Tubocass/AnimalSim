@@ -1,13 +1,13 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Pathfinding;
 
 public class AstarAI : MonoBehaviour {
 	
 	public Transform target;
 	public Vector3 targetLocation;
-	
-	private Animator animator;
+
 	private Seeker seeker;
 	private CharacterController controller;
 	public Herd herdController;
@@ -20,34 +20,101 @@ public class AstarAI : MonoBehaviour {
 	Vector3 newDir;
 	//The max distance from the AI to a waypoint for it to continue to the next waypoint
 	public float nextWaypointDistance = 1;
+	public float stoppingDistance  = 2;
 	//The waypoint we are currently moving towards
 	private int currentWaypoint = 0;
-	
+	private bool targetReached;
 	public int counter = 120;
-	Vector3 dir;
-	public float pushPower = 2.0F;
-	
-	public void Start () 
-	{ 
-		animator = GetComponent<Animator> ();
-		targetLocation = herdController.getTargetLocation();
-		//targetLocation.y = 0;
+
+	void Awake() 
+	{
 		seeker = GetComponent<Seeker>();
 		controller = GetComponent<CharacterController>();
-		StartPath();
-		
 	}
-	
-	void OnControllerColliderHit(ControllerColliderHit hit) {
-		if (hit.gameObject.CompareTag ("Food")) 
-		{
-		Rigidbody body = hit.collider.attachedRigidbody;
+	/*
+	public void Start () 
+	{
+		startHasRun = true;
+		OnEnable ();
+	}
+	/** Run at start and when reenabled.
+	 * Starts RepeatTrySearchPath.
+	 * 
+	 * \see Start
 
-		Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
-		body.velocity = pushDir * pushPower;
+	protected virtual void OnEnable () {
+		
+		lastRepath = -9999;
+		canSearchAgain = true;
+		
+		lastFoundWaypointPosition = GetFeetPosition ();
+		
+		if (startHasRun) {
+			//Make sure we receive callbacks when paths complete
+			seeker.pathCallback += OnPathComplete;
+			
+			StartCoroutine (RepeatTrySearchPath ());
 		}
 	}
 	
+	public void OnDisable () {
+		// Abort calculation of path
+		if (seeker != null && !seeker.IsDone()) seeker.GetCurrentPath().Error();
+		
+		// Release current path
+		if (path != null) path.Release (this);
+		path = null;
+		
+		//Make sure we receive callbacks when paths complete
+		seeker.pathCallback -= OnPathComplete;
+	}
+	
+	/** Tries to search for a path every #repathRate seconds.
+	  * \see TrySearchPath
+
+	protected IEnumerator RepeatTrySearchPath () {
+		while (true) {
+			float v = TrySearchPath ();
+			yield return new WaitForSeconds (v);
+		}
+	}
+	
+	/** Tries to search for a path.
+	 * Will search for a new path if there was a sufficient time since the last repath and both
+	 * #canSearchAgain and #canSearch are true and there is a target.
+	 * 
+	 * \returns The time to wait until calling this function again (based on #repathRate) 
+
+	public float TrySearchPath () {
+		if (Time.time - lastRepath >= repathRate && canSearchAgain && canSearch && target != null) {
+			SearchPath ();
+			return repathRate;
+		} else {
+			//StartCoroutine (WaitForRepath ());
+			float v = repathRate - (Time.time-lastRepath);
+			return v < 0 ? 0 : v;
+		}
+	}
+	
+	/** Requests a path to the target 
+	public virtual void SearchPath () {
+		
+		if (target == null) throw new System.InvalidOperationException ("Target is null");
+		
+		lastRepath = Time.time;
+		//This is where we should search to
+		Vector3 targetPosition = target.position;
+		
+		canSearchAgain = false;
+		
+		//Alternative way of requesting the path
+		//ABPath p = ABPath.Construct (GetFeetPosition(),targetPoint,null);
+		//seeker.StartPath (p);
+		
+		//We should search from the current position
+		seeker.StartPath (GetFeetPosition(), targetPosition);
+	}
+*/
 	public void OnPathComplete (Path p) 
 	{
 		//Debug.Log ("Yey, we got a path back. Did it have an error? "+p.error);
@@ -56,57 +123,70 @@ public class AstarAI : MonoBehaviour {
 			path = p;
 			//Reset the waypoint counter
 			currentWaypoint = 0;
+			targetReached = false;
 		}else Debug.Log(p.error);
 	}
 	public void StartPath()
 	{
 		seeker.StartPath (transform.position,targetLocation, OnPathComplete);
 	}
-	
+	public void OnTargetReached()
+	{
+		if (Vector3.Distance (transform.position,targetLocation) > stoppingDistance)
+			StartPath();
+	}
 	public void FixedUpdate () 
 	{
+		targetLocation = target.position;
+		Vector3 dir = calcV(transform.position);
+		controller.Move (dir);
+	}
+	public Vector3 calcV(Vector3 currentPosition)
+	{
+		if (path == null || path.vectorPath == null || path.vectorPath.Count == 0) return Vector3.zero;
+		List<Vector3> vPath = path.vectorPath;
 		
-		if (path == null) 
-		{
-			//We have no path to move after yet
-			return;
-		}
+		if (currentWaypoint >= vPath.Count) { currentWaypoint = vPath.Count-1; }
 		
-		if (currentWaypoint >= path.vectorPath.Count) 	
+		if (currentWaypoint == vPath.Count) 	
 		{
 			Debug.Log ("End Of Path Reached");
-			if (counter<=0)
-			{
-				targetLocation = herdController.ClosestFood(transform.position);
-				targetLocation.y = 0;
-				if (Vector3.Distance (transform.position,targetLocation) >3)
+
+			if (Vector3.Distance (currentPosition,targetLocation) < stoppingDistance)
 				{
-					StartPath();
+					targetReached = true;
+					OnTargetReached();
 				}
-				counter = 120;
-			}
-			
-			counter -=1;
-			return;
+			//return Vector3.zero;
 		}
-		animator.speed = speed;
+		if (currentWaypoint < vPath.Count) 
+		{
+
+			//Check if we are close enough to the next waypoint
+			//If we are, proceed to follow the next waypoint
+			float dist = Vector3.Distance (currentPosition,vPath[currentWaypoint]);
+			if (dist < nextWaypointDistance) 
+			{
+				currentWaypoint++;
+			}
+
+		}
+		
 		//Direction to the next waypoint
-		dir = (path.vectorPath[currentWaypoint]-transform.position).normalized;
-		Vector3 targetdir = path.vectorPath[currentWaypoint]-transform.position;
+		//rotate
+		Vector3 targetdir = vPath[currentWaypoint]-currentPosition;
 		targetdir.y = 0;
-		step *= Time.deltaTime;
 		newDir = Vector3.RotateTowards(transform.forward, targetdir, 3, 0.0F);
 		transform.rotation = Quaternion.LookRotation(newDir);
+		//move
+		Vector3 dir = (path.vectorPath[currentWaypoint]-currentPosition).normalized;
 		dir *= speed * Time.fixedDeltaTime;
-		controller.Move (dir);
-		
-		//Check if we are close enough to the next waypoint
-		//If we are, proceed to follow the next waypoint
-		if (Vector3.Distance (transform.position,path.vectorPath[currentWaypoint]) < nextWaypointDistance) 
-		{
-			currentWaypoint++;
-			return;
-		}
+		return dir;
+
+	}
+	public void setTarget(Transform t)
+	{
+		this.target = t;
 	}
 	
 }

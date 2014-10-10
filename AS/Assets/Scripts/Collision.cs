@@ -12,21 +12,7 @@ public class Collision : MonoBehaviour {
 			collider.isTrigger = true;
 		}*/
 	}
-	void OnCollisionEnter(Collision other)
-	{
-		if (other.gameObject.CompareTag ("NPC"))
-		Destroy(this.gameObject,5);
-	}
-
-	void OnTriggerEnter(Collider other)
-	{
 
 
-		if (other.gameObject.CompareTag ("NPC")) 
-		{
-			print("Bite Me");
-			Destroy(this.gameObject,5);
-		}
-			 
-	}
+
 }

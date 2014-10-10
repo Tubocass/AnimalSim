@@ -471,4 +471,8 @@ public class AIPath : MonoBehaviour {
 		offset = Mathf.Clamp (offset+closest,0.0F,1.0F);
 		return (b-a)*offset + a;
 	}
+	public void setTarget(Transform t)
+	{
+		this.target = t;
+	}
 }
