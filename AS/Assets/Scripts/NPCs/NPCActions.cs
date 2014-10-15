@@ -7,7 +7,6 @@ public class NPCActions : MonoBehaviour
 	Anim anim;
 	SphereCollider col;
 	//GameObject[] aVisibleFood = new GameObject[10];
-	ArrayList aVisibleFood = new ArrayList();
 	Queue qVisibleFood = new Queue(6);
 	public Transform target;
 	public float pushPower = 2.0F;
@@ -59,6 +58,21 @@ public class NPCActions : MonoBehaviour
 		dLoaction = new Vector3 (dx, 0, dz);
 		AStar.setTargetLocation (dLoaction);
 	}
+	public void Bite()
+	{
+		state = State.Eating;
+		anim.OnBite();
+		Debug.Log("Ass");
+	}
+	public void EndBite()
+	{
+		//StopCoroutine("Behaviour");
+		state = State.Idle;
+		anim.EndBite();
+		Debug.Log("boobs");
+
+		//StartCoroutine("Behaviour",state);
+	}
 
 	IEnumerator Behaviour(State state)
 	{
@@ -92,12 +106,14 @@ public class NPCActions : MonoBehaviour
 			AStar.canMove = true;
 			AStar.canSearch = false;
 			if(AStar.TargetReached)
-				state = State.Eating;
+				Bite ();
 			//AStar.SearchPath();
 			yield return null;
 			break;
 		case State.Eating:
 			//anim.OnBite();
+			yield return new WaitForSeconds(1);
+			EndBite();
 			yield return null;
 			break;
 		}
@@ -124,7 +140,6 @@ public class NPCActions : MonoBehaviour
 						bFoodVisible = true;
 						target = other.transform;
 						Debug.Log("Found IT!");
-						aVisibleFood.Add(target);
 						qVisibleFood.Enqueue(target);
 					}
 				}
