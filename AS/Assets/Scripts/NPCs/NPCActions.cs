@@ -18,6 +18,7 @@ public class NPCActions : MonoBehaviour
 	public float hunger;
 	public enum State{Eating,Searching,Idle,Moving};
 	public State state;
+	Vector3 dLoaction;
 	
 	
 	void Start()
@@ -50,13 +51,23 @@ public class NPCActions : MonoBehaviour
 			body.velocity = pushDir * pushPower;
 		}
 	}
+	void PickRandomLocation()
+	{
+		float dx = Random.Range (-10, 10);
+		float dy = Random.Range (-10, 10);
+		float dz = Random.Range (-10, 10);
+		dLoaction = new Vector3 (dx, 0, dz);
+		AStar.setTargetLocation (dLoaction);
+	}
 
 	IEnumerator Behaviour(State state)
 	{
 		switch(state)
 		{
 		case State.Idle: 
+			AStar.canSearch = false;
 			AStar.canMove = false;
+			PickRandomLocation();
 			//hunger+=10;
 			yield return new WaitForSeconds(5); 
 			break;
@@ -64,7 +75,7 @@ public class NPCActions : MonoBehaviour
 			AStar.canSearch = true;
 			AStar.canMove = true;
 	
-			if (qVisibleFood.Count>0)
+			/*if (qVisibleFood.Count>0)
 			{
 				Transform food = (Transform)qVisibleFood.Dequeue(); 
 				if (GameObject.Find(food.gameObject.name)!=null)
@@ -74,18 +85,20 @@ public class NPCActions : MonoBehaviour
 					state = State.Moving;
 					break;
 				}
-			}
+			}*/
 			yield return null;
 			break;
 		case State.Moving:
 			AStar.canMove = true;
-			AStar.canSearch = true;
+			AStar.canSearch = false;
 			if(AStar.TargetReached)
 				state = State.Eating;
 			//AStar.SearchPath();
+			yield return null;
 			break;
 		case State.Eating:
 			//anim.OnBite();
+			yield return null;
 			break;
 		}
 	}

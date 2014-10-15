@@ -48,6 +48,8 @@ public class AIPath : MonoBehaviour {
 	 * It can be a point on the ground where the player has clicked in an RTS for example, or it can be the player object in a zombie game.
 	 */
 	public Transform target;
+
+	Vector3 TargetLocation;
 	
 	/** Enables or disables searching for paths.
 	 * Setting this to false does not stop any active path requests from being calculated or stop it from continuing to follow the current path.
@@ -221,7 +223,8 @@ public class AIPath : MonoBehaviour {
 	 * \returns The time to wait until calling this function again (based on #repathRate) 
 	 */
 	public float TrySearchPath () {
-		if (Time.time - lastRepath >= repathRate && canSearchAgain && canSearch && target != null) {
+		if (Time.time - lastRepath >= repathRate && canSearchAgain && canSearch) // && target != null
+		{ 
 			SearchPath ();
 			return repathRate;
 		} else {
@@ -233,21 +236,29 @@ public class AIPath : MonoBehaviour {
 	
 	/** Requests a path to the target */
 	public virtual void SearchPath () {
-		
-		if (target == null) throw new System.InvalidOperationException ("Target is null");
-		
+
 		lastRepath = Time.time;
-		//This is where we should search to
-		Vector3 targetPosition = target.position;
-		
 		canSearchAgain = false;
-		
-		//Alternative way of requesting the path
-		//ABPath p = ABPath.Construct (GetFeetPosition(),targetPoint,null);
-		//seeker.StartPath (p);
-		
-		//We should search from the current position
-		seeker.StartPath (GetFeetPosition(), targetPosition);
+		if (target == null) //throw new System.InvalidOperationException ("Target is null");
+		{
+			seeker.StartPath (GetFeetPosition(), TargetLocation);
+		}else{
+			//This is where we should search to
+			Vector3 targetPosition = target.position;
+			//Alternative way of requesting the path
+			//ABPath p = ABPath.Construct (GetFeetPosition(),targetPoint,null);
+			//seeker.StartPath (p);
+
+			//We should search from the current position
+			seeker.StartPath (GetFeetPosition(), targetPosition);
+		}
+	}
+	public void SearchPath(Vector3 Location)
+	{
+		lastRepath = Time.time;
+		canSearchAgain = false;
+
+		seeker.StartPath (GetFeetPosition(), Location);
 	}
 	
 	public virtual void OnTargetReached () {
@@ -474,5 +485,9 @@ public class AIPath : MonoBehaviour {
 	public void setTarget(Transform t)
 	{
 		this.target = t;
+	}
+	public void setTargetLocation(Vector3 t)
+	{
+		this.TargetLocation = t;
 	}
 }
