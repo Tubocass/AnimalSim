@@ -52,10 +52,10 @@ public class NPCActions : MonoBehaviour
 	}
 	void PickRandomLocation()
 	{
-		float dx = Random.Range (-10, 10);
+		float dx = Random.Range (-100, 100);
 		float dy = Random.Range (-10, 10);
-		float dz = Random.Range (-10, 10);
-		dLoaction = new Vector3 (dx, 0, dz);
+		float dz = Random.Range (-100, 100);
+		dLoaction = transform.position+ new Vector3 (dx, 0 ,dy);
 		AStar.setTargetLocation (dLoaction);
 	}
 	public void Bite()
@@ -64,6 +64,14 @@ public class NPCActions : MonoBehaviour
 		anim.OnBite();
 		Debug.Log("Ass");
 	}
+	public void OnTargetReached()
+	{
+		if (target.gameObject.tag == "Food")
+		{
+			Bite ();
+		}
+	}
+
 	public void EndBite()
 	{
 		//StopCoroutine("Behaviour");
@@ -72,6 +80,10 @@ public class NPCActions : MonoBehaviour
 		Debug.Log("boobs");
 
 		//StartCoroutine("Behaviour",state);
+	}
+	public void startMoving()
+	{
+		state = State.Moving;
 	}
 
 	IEnumerator Behaviour(State state)
@@ -87,8 +99,24 @@ public class NPCActions : MonoBehaviour
 			break;
 		case State.Searching: 
 			AStar.canSearch = true;
-			AStar.canMove = true;
+			AStar.canMove = false;
 	
+			if (qVisibleFood.Count>0)
+			{
+				Transform food = (Transform)qVisibleFood.Dequeue(); 
+				if (GameObject.Find(food.gameObject.name)!=null)
+				{
+					AStar.setTarget(food);
+					//AStar.SearchPath();
+					startMoving();
+					break;
+				}
+			}
+			yield return null;
+			break;
+		case State.Moving:
+			AStar.canMove = true;
+			AStar.canSearch = true;
 			/*if (qVisibleFood.Count>0)
 			{
 				Transform food = (Transform)qVisibleFood.Dequeue(); 
@@ -96,17 +124,12 @@ public class NPCActions : MonoBehaviour
 				{
 					AStar.setTarget(food);
 					//AStar.SearchPath();
-					state = State.Moving;
+					startMoving();
 					break;
 				}
 			}*/
-			yield return null;
-			break;
-		case State.Moving:
-			AStar.canMove = true;
-			AStar.canSearch = false;
 			if(AStar.TargetReached)
-				Bite ();
+				OnTargetReached ();
 			//AStar.SearchPath();
 			yield return null;
 			break;
@@ -133,7 +156,6 @@ public class NPCActions : MonoBehaviour
 				
 				if(Physics.Raycast(transform.position + transform.up, direction.normalized, out hit, col.radius))
 				{
-					
 					if(hit.collider.gameObject.tag == "Food")
 					{
 						Debug.DrawRay(transform.position+ transform.up, direction, Color.red);
