@@ -3,149 +3,139 @@ using System.Collections;
 
 public class NPCActions : MonoBehaviour 
 {
-	AIPath AStar;
-	Anim anim;
 	SphereCollider col;
 	//GameObject[] aVisibleFood = new GameObject[10];
-	Queue qVisibleFood = new Queue(6);
-	public Transform target;
-	public float pushPower = 2.0F;
-	public bool bHungry;
-	public bool bFoodVisible;
-	bool bSearching;
-	float fieldOfViewAngle = 110;
-	public float hunger;
-	public enum State{Eating,Searching,Idle,Moving};
-	public State state;
-	Vector3 dLoaction;
+	//Queue qVisibleFood = new Queue(6);
+	//public Transform target;
+	//public bool bHungry;
+	//public bool bFoodVisible;
+	//bool bSearching;
+	[SerializeField]float fieldOfViewAngle = 110;
+	//public float hunger;
+	//public enum State{Eating,Searching,Idle,Moving};
+	//public State state;
+	[SerializeField]Vector3 destination;
+	[SerializeField] bool bFleeing;
+	LayerMask playerMask, groundMask;
+	Animator animator;
+	bool bMoving;
+	NavMeshAgent agent;
+	int idleHash = Animator.StringToHash("Base Layer.Idle");
+	int biteHash = Animator.StringToHash("Base Layer.Bite");
 	
 	
-	void Start()
+	void OnEnable()
 	{
-		state = State.Idle;
-		AStar = GetComponent<AIPath>();
+		agent = GetComponent<NavMeshAgent>();
+		destination = PickRandomLocation(transform.position,100);
+		animator = GetComponent<Animator> ();
 		col = GetComponent<SphereCollider>();
-		anim = GetComponentInChildren<Anim>();
+		playerMask = 1<<LayerMask.NameToLayer("Player");
+		groundMask = 1<<LayerMask.NameToLayer("Terrain");
+
 	}
 	
 	void Update()
 	{
-		if (hunger > 60) 
+		if(!bMoving)
 		{
-			bHungry = true;
-			state = State.Searching;
+			destination = PickRandomLocation(transform.position,100);
+			if(destination!=transform.position)
+			{
+				MoveTo(destination);
+			}
+		}
+		if (animator.IsInTransition(0)&& animator.GetNextAnimatorStateInfo(0).nameHash == idleHash) 
+		{
+			float idle = Random.value;
+			animator.SetFloat("Idle",idle);
 			
-		}else bHungry = false;
+		}
 		
-		StartCoroutine("Behaviour",state);
+//		if (hunger > 60) 
+//		{
+//			bHungry = true;
+//			state = State.Searching;
+//			
+//		}else bHungry = false;
 		
 	}
-	void OnControllerColliderHit(ControllerColliderHit hit) 
+
+	public void MoveTo(Vector3 location)
 	{
-		if (hit.gameObject.CompareTag ("Food")) 
+		//agent.ResetPath();
+		bMoving = true;
+		//currentVector = location;
+		agent.SetDestination(location);
+		StopCoroutine("MovingTo");
+		StartCoroutine("MovingTo");
+
+	}
+	IEnumerator MovingTo()
+	{
+		while(bMoving)
 		{
-			Rigidbody body = hit.collider.attachedRigidbody;
-			
-			Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
-			body.velocity = pushDir * pushPower;
+			animator.SetFloat("Speed", agent.velocity.magnitude);
+			if(agent.remainingDistance<1)
+			{
+				animator.SetFloat("Speed", 0f);
+				yield return new WaitForSeconds(1f);
+				bMoving = false;
+				Debug.Log("I arrived");
+			}
+			yield return new WaitForSeconds(0.5f);
 		}
 	}
-	void PickRandomLocation()
+
+	Vector3 PickRandomLocation(Vector3 origin, float range)
 	{
-		float dx = Random.Range (-100, 100);
-		float dy = Random.Range (-10, 10);
-		float dz = Random.Range (-100, 100);
-		dLoaction = transform.position+ new Vector3 (dx, 0 ,dy);
-		AStar.setTargetLocation (dLoaction);
+		float xx = Random.Range(-range,range)+origin.x;
+		float zz = Random.Range(-range,range)+origin.z;
+		return GroundCheck(new Vector3(xx,500,zz));
+//		RaycastHit hit = new RaycastHit();
+//		Physics.Raycast(new Vector3(xx,500f,zz),Vector3.down,out hit,1000f,groundMask);
+//		NavMeshPath path = new NavMeshPath();
+//		agent.CalculatePath(hit.point,path);
+//		if(path.status != NavMeshPathStatus.PathPartial)
+//		{
+//			return hit.point;
+//		}else return origin;
+
+	}
+
+	Vector3 Flee(Vector3 enemyLoc)
+	{
+		Vector3 fleeTo, dirToFlee, dirToEnemy = enemyLoc - transform.position;
+		do{
+		 fleeTo = PickRandomLocation(transform.position, 250);
+		 dirToFlee = fleeTo-transform.position;
+		}while(Vector3.Dot(dirToFlee ,dirToEnemy)>0);//while the flee location is towards the enemy
+		return fleeTo;
+	}
+
+	Vector3 GroundCheck(Vector3 origin)
+	{
+		RaycastHit hit = new RaycastHit();
+		Physics.Raycast(origin,Vector3.down,out hit,1000f,groundMask);
+		NavMeshPath path = new NavMeshPath();
+		agent.CalculatePath(hit.point,path);
+		if(path.status != NavMeshPathStatus.PathPartial)
+		{
+			return hit.point;
+		}else return origin;
 	}
 	public void Bite()
 	{
-		state = State.Eating;
-		anim.OnBite();
-		Debug.Log("Ass");
+
 	}
 	public void OnTargetReached()
 	{
-		if (target.gameObject.tag == "Food")
-		{
-			Bite ();
-		}
+
 	}
 
-	public void EndBite()
+	void OnTriggerEnter(Collider other)
 	{
-		//StopCoroutine("Behaviour");
-		state = State.Idle;
-		anim.EndBite();
-		Debug.Log("boobs");
-
-		//StartCoroutine("Behaviour",state);
-	}
-	public void startMoving()
-	{
-		state = State.Moving;
-	}
-
-	IEnumerator Behaviour(State state)
-	{
-		switch(state)
-		{
-		case State.Idle: 
-			AStar.canSearch = false;
-			AStar.canMove = false;
-			PickRandomLocation();
-			//hunger+=10;
-			yield return new WaitForSeconds(5); 
-			break;
-		case State.Searching: 
-			AStar.canSearch = true;
-			AStar.canMove = false;
-	
-			if (qVisibleFood.Count>0)
-			{
-				Transform food = (Transform)qVisibleFood.Dequeue(); 
-				if (GameObject.Find(food.gameObject.name)!=null)
-				{
-					AStar.setTarget(food);
-					//AStar.SearchPath();
-					startMoving();
-					break;
-				}
-			}
-			yield return null;
-			break;
-		case State.Moving:
-			AStar.canMove = true;
-			AStar.canSearch = true;
-			/*if (qVisibleFood.Count>0)
-			{
-				Transform food = (Transform)qVisibleFood.Dequeue(); 
-				if (GameObject.Find(food.gameObject.name)!=null)
-				{
-					AStar.setTarget(food);
-					//AStar.SearchPath();
-					startMoving();
-					break;
-				}
-			}*/
-			if(AStar.TargetReached)
-				OnTargetReached ();
-			//AStar.SearchPath();
-			yield return null;
-			break;
-		case State.Eating:
-			//anim.OnBite();
-			yield return new WaitForSeconds(1);
-			EndBite();
-			yield return null;
-			break;
-		}
-	}
-	
-
-	void OnTriggerStay (Collider other)
-	{
-		if(other.gameObject.tag == "Food")
+		if(other.gameObject.tag == "Player")
 		{
 			Vector3 direction = other.transform.position - transform.position;
 			float angle = Vector3.Angle(direction, transform.forward);
@@ -153,16 +143,52 @@ public class NPCActions : MonoBehaviour
 			if(angle < fieldOfViewAngle * 0.5f)
 			{
 				RaycastHit hit;
-				
-				if(Physics.Raycast(transform.position + transform.up, direction.normalized, out hit, col.radius))
+				if(Physics.Raycast(transform.position, direction, out hit, col.radius))
 				{
-					if(hit.collider.gameObject.tag == "Food")
+					if(hit.collider.gameObject.tag == "Player")
 					{
-						Debug.DrawRay(transform.position+ transform.up, direction, Color.red);
-						bFoodVisible = true;
-						target = other.transform;
-						Debug.Log("Found IT!");
-						qVisibleFood.Enqueue(target);
+						if(!bFleeing)
+						{
+							destination = Flee(other.transform.position);
+							if(destination!=transform.position)
+							{
+								MoveTo(destination);
+								bFleeing = true;
+							}
+							Debug.Log(destination.ToString());
+						}
+
+					}
+				}
+			}
+		}
+	}
+	void OnTriggerStay (Collider other)
+	{
+		if(other.gameObject.tag == "Player")
+		{
+			Vector3 direction = other.transform.position - transform.position;
+			float angle = Vector3.Angle(direction, transform.forward);
+			
+			if(angle < fieldOfViewAngle * 0.5f)
+			{
+				RaycastHit hit;
+				if(Physics.Raycast(transform.position, direction, out hit, col.radius))
+				{
+					if(hit.collider.gameObject.tag == "Player")
+					{
+						Debug.DrawRay(transform.position, direction, Color.red);
+						if(!bFleeing)
+						{
+							destination = Flee(other.transform.position);
+
+							if(destination!=transform.position)
+							{
+								MoveTo(destination);
+								bFleeing = true;
+							}
+							Debug.Log(destination.ToString());
+						}
 					}
 				}
 			}
@@ -171,7 +197,9 @@ public class NPCActions : MonoBehaviour
 	
 	void OnTriggerExit (Collider other)
 	{
-		if(other.gameObject.tag == "Food")
-			bFoodVisible = false;
+		if(other.gameObject.tag == "Player")
+		{
+			bFleeing = false;
+		}
 	}
 }

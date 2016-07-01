@@ -3,8 +3,6 @@ using System.Collections;
 
 public class Herd : MonoBehaviour 
 {
-
-
 	public GameObject prefab;
 	public int numberOfObjects = 6;
 	public float spawnRadius = 5f;
@@ -46,7 +44,7 @@ public class Herd : MonoBehaviour
 			Vector2 circle = Random.insideUnitCircle * spawnRadius;
 			Vector3 pos = transform.position+ new Vector3 (circle.x, 0 ,circle.y);
 			herd[i] = (GameObject)Instantiate(prefab, pos, Quaternion.identity);
-			herd[i].GetComponent<AstarAI>().herdController = getHerd();
+
 		}
 		return herd;
 	}

@@ -1,16 +1,20 @@
 fileFormatVersion: 2
 guid: f30ddb5928fe01c448e4736ec9aff917
+timeCreated: 1465940814
+licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - none: {fileID: 2800000, guid: 31f2da7b0e60cab4db408a91f09c630d, type: 3}
-  - howl: {instanceID: 0}
+  - howl: {fileID: 2800000, guid: 6c18b0f997e020e45b31847f3780fc1d, type: 3}
   - sniff: {fileID: 2800000, guid: 56947e7222d6afa4a875571e823101ff, type: 3}
-  - bite: {instanceID: 0}
+  - bite: {fileID: 2800000, guid: 4079abae538cdf34fa463ffc90f46452, type: 3}
   - grab: {instanceID: 0}
-  - eat: {instanceID: 0}
+  - eat: {fileID: 2800000, guid: 4079abae538cdf34fa463ffc90f46452, type: 3}
   - pee: {instanceID: 0}
   - scratch: {fileID: 2800000, guid: 8e71af7d7375211458bd2aa7f4e9352f, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
+  assetBundleName: 
+  assetBundleVariant: 

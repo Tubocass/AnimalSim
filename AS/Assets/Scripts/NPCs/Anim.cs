@@ -13,7 +13,7 @@ public class Anim : MonoBehaviour {
 	void Start()
 	{
 		animator = GetComponent<Animator> ();
-		rigid = rigidbody;
+		rigid = GetComponent<Rigidbody>();
 		controller = transform.parent.GetComponent<CharacterController> ();
 
 	}

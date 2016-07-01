@@ -21,13 +21,13 @@ public class Movement : MonoBehaviour {
 		herd = GetComponent<CharacterController> ();
 		moveDirection = Vector3.zero;
 		print ("step1");
-		animation.wrapMode = WrapMode.Loop;
-		animation ["Big_Cat_Idle"].wrapMode = WrapMode.Once;
-		animation ["Big_Cat_Idle"].layer = 1;
+		GetComponent<Animation>().wrapMode = WrapMode.Loop;
+		GetComponent<Animation>() ["Big_Cat_Idle"].wrapMode = WrapMode.Once;
+		GetComponent<Animation>() ["Big_Cat_Idle"].layer = 1;
 
-		idle = animation ["Big_Cat_Idle"];
-		walk = animation ["Big_Cat_Walk"];
-		run = animation ["Big_Cat_Walk"];
+		idle = GetComponent<Animation>() ["Big_Cat_Idle"];
+		walk = GetComponent<Animation>() ["Big_Cat_Walk"];
+		run = GetComponent<Animation>() ["Big_Cat_Walk"];
 
 
 
@@ -39,7 +39,7 @@ public class Movement : MonoBehaviour {
 
 	//	nPC = GameObject.FindGameObjectWithTag(Tags.food).transform;
 	//	go.transform.LookAt (nPC);
-				animation.CrossFade ("Big_Cat_Walk");
+				GetComponent<Animation>().CrossFade ("Big_Cat_Walk");
 		print ("alwayson");
 				if (Input.GetAxis ("Horizontal") != 0) {
 						transform.Rotate (0, Input.GetAxis ("Horizontal") / turnSpeed, 0);
@@ -59,7 +59,7 @@ public class Movement : MonoBehaviour {
 				collision = herd.Move (moveDirection * Time.deltaTime);
 
 	if (Input.GetAxis("Vertical") != 0){
-		animation.Play("Big_Cat_Walk");
+		GetComponent<Animation>().Play("Big_Cat_Walk");
 			print ("ok2");
 	}
 
