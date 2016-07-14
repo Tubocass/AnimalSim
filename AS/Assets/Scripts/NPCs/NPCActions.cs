@@ -18,26 +18,29 @@ public class NPCActions : MonoBehaviour
 	[SerializeField] bool bFleeing;
 	LayerMask playerMask, groundMask;
 	Animator animator;
-	bool bMoving;
+	bool bMoving, bDead;
 	NavMeshAgent agent;
+	NPCBase NPC;
 	int idleHash = Animator.StringToHash("Base Layer.Idle");
 	int biteHash = Animator.StringToHash("Base Layer.Bite");
 	
 	
 	void OnEnable()
 	{
+		NPC = GetComponent<NPCBase>();
 		agent = GetComponent<NavMeshAgent>();
 		destination = PickRandomLocation(transform.position,100);
 		animator = GetComponent<Animator> ();
 		col = GetComponent<SphereCollider>();
 		playerMask = 1<<LayerMask.NameToLayer("Player");
 		groundMask = 1<<LayerMask.NameToLayer("Terrain");
-
+		float idle = Random.value;
+		animator.SetFloat("Idle",idle);
 	}
 	
 	void Update()
 	{
-		if(!bMoving)
+		if(!bMoving && !bDead)
 		{
 			destination = PickRandomLocation(transform.position,100);
 			if(destination!=transform.position)
@@ -87,6 +90,17 @@ public class NPCActions : MonoBehaviour
 		}
 	}
 
+	Vector3 GroundCheck(Vector3 origin)
+	{
+		RaycastHit hit = new RaycastHit();
+		Physics.Raycast(origin,Vector3.down,out hit,1000f,groundMask);
+		NavMeshPath path = new NavMeshPath();
+		agent.CalculatePath(hit.point,path);
+		if(path.status != NavMeshPathStatus.PathPartial)
+		{
+			return hit.point;
+		}else return origin;
+	}
 	Vector3 PickRandomLocation(Vector3 origin, float range)
 	{
 		float xx = Random.Range(-range,range)+origin.x;
@@ -102,7 +116,6 @@ public class NPCActions : MonoBehaviour
 //		}else return origin;
 
 	}
-
 	Vector3 Flee(Vector3 enemyLoc)
 	{
 		Vector3 fleeTo, dirToFlee, dirToEnemy = enemyLoc - transform.position;
@@ -113,16 +126,23 @@ public class NPCActions : MonoBehaviour
 		return fleeTo;
 	}
 
-	Vector3 GroundCheck(Vector3 origin)
+	public void GetHurt(float damage)
 	{
-		RaycastHit hit = new RaycastHit();
-		Physics.Raycast(origin,Vector3.down,out hit,1000f,groundMask);
-		NavMeshPath path = new NavMeshPath();
-		agent.CalculatePath(hit.point,path);
-		if(path.status != NavMeshPathStatus.PathPartial)
+		NPC.SetHealth(-damage);
+		if(NPC.Health==0)
 		{
-			return hit.point;
-		}else return origin;
+			Death();
+		}
+	}
+
+	public void Death()
+	{
+		bDead = true;
+		bMoving = false;
+		bFleeing = false;
+		StopCoroutine("MovingTo");
+		agent.Stop();
+		animator.SetTrigger("Die");
 	}
 	public void Bite()
 	{

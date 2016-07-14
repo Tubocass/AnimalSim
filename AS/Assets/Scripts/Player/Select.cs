@@ -40,7 +40,7 @@ public class Select : MonoBehaviour
 						{
 							Instantiate(scratchFab,new Vector3(0,0,1),Quaternion.identity);
 							//GetComponent<AudioSource>().PlayOneShot(roar);
-							Destroy(hit.collider.gameObject,4);
+							hit.collider.gameObject.GetComponent<NPCActions>().GetHurt(10);
 							/*
 							 * destroy object
 							 * decrease hunger
